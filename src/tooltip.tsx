@@ -17,6 +17,7 @@ import Subject from "./svg/subject";
 import CalendarToday from "./svg/calendarToday";
 
 import { TooltipProps, TooltipState } from './types/tooltip';
+import { ATCBActionEventConfig, atcb_action } from "add-to-calendar-button";
 
 export default class Tooltip extends React.Component<TooltipProps, TooltipState> {
   constructor(props: TooltipProps) {
@@ -83,10 +84,24 @@ export default class Tooltip extends React.Component<TooltipProps, TooltipState>
       calendarName = <div></div>;
     }
 
+    const config: ATCBActionEventConfig = {
+      name: this.props.name,
+      description: this.props.description,
+      iCalFileName: this.props.name,
+      location: this.props.location,
+      startDate: this.props.startTime.format("YYYY-MM-DD"),
+      endDate: this.props.endTime.format("YYYY-MM-DD"),
+      startTime: this.props.startTime.format("hh:mm"),
+      endTime: this.props.endTime.format("hh:mm"),
+      options: ["Apple", "Google", "Outlook.com", "Yahoo"],
+      timeZone: "America/Denver",
+    }
+
     return (
       <Popper modifiers={[{ name: 'preventOverflow', options: { altAxis: true } }]}>
         {({ ref, style, placement, arrowProps }) => (
           <div 
+            id="tooltip"
             className="tooltip" 
             ref={ref}
             style={style}
@@ -131,22 +146,35 @@ export default class Tooltip extends React.Component<TooltipProps, TooltipState>
               {description}
               {location}
               {calendarName}
-              <a 
-                href={this.state.eventURL}
-                target="_blank"
-                onMouseDown={e => e.preventDefault()}
-                css={{
-                  fontSize: "13px",
-                  tabIndex: -1
+              <div
+                css={css`
+                  text-align: center;
+                  margin-top: 12px;
+                  padding: 6px 0px;
+                  border-radius: 3px;
+                  background: #007AFF; 
+                  color: white;
+                  shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                  &:hover {
+                    cursor: pointer;
+                    background: #005BBB;
+                  }
+                  
+                  &:active {
+                    background: #004A99;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Slightly more intense shadow */
+                  }
+                `}
+                onClick={() => {
+                  atcb_action(config);
                 }}
               >
-                Copy to Calendar
-              </a>
+                Add to Calendar
+              </div>
             </div>
           </div>
         )}    
       </Popper>
-      
     );
   }
 }

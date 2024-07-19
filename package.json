@@ -43,6 +43,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "add-to-calendar-button": "^2.6.18",
+    "dotenv": "^16.4.5",
     "gud": "^1.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
