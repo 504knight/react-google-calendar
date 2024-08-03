@@ -89,12 +89,11 @@ export default class Tooltip extends React.Component<TooltipProps, TooltipState>
       description: this.props.description,
       iCalFileName: this.props.name,
       location: this.props.location,
-      startDate: this.props.startTime.format("YYYY-MM-DD"),
-      endDate: this.props.endTime.format("YYYY-MM-DD"),
-      startTime: this.props.startTime.format("hh:mm"),
-      endTime: this.props.endTime.format("hh:mm"),
+      startDate: this.props.startTime.utc().format("YYYY-MM-DD"),
+      endDate: this.props.endTime.utc().format("YYYY-MM-DD"),
+      startTime: this.props.startTime.utc().format("HH:mm"),
+      endTime: this.props.endTime.utc().format("HH:mm"),
       options: ["Apple", "Google", "Outlook.com", "Yahoo"],
-      timeZone: "America/Denver",
     }
 
     return (
