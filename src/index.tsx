@@ -378,7 +378,7 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
               color: event.color
             }
           } else {
-            let eventStart = moment.utc(date); //avoid bad timezone conversions
+            let eventStart = moment(date); //avoid bad timezone conversions
             let eventEnd = moment(eventStart).add(duration);
             props = {
               name: event.name,
@@ -540,16 +540,22 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
 
   //get dates based on rrule string between dates
   static getDatesFromRRule(str: string, eventStart: Moment, betweenStart: Moment, betweenEnd: Moment) {    
-    //get recurrences using RRule
-    let rstr = `DTSTART:${moment(eventStart).utc(true).format('YYYYMMDDTHHmmss')}Z\n${str}`;
+    // Convert eventStart to UTC
+    let utcEventStart = moment(eventStart).utc();
+    // Create RRule string with UTC DTSTART
+    let rstr = `DTSTART:${utcEventStart.format('YYYYMMDDTHHmmss')}Z\n${str}`;
+    
+    // Parse RRule string
     let rruleSet = rrulestr(rstr, {forceset: true});
     
-    //get dates
-    let begin = moment(betweenStart).utc(true).toDate();
-    let end = moment(betweenEnd).utc(true).toDate();
+    // Convert betweenStart and betweenEnd to UTC dates
+    let begin = moment(betweenStart).utc().toDate();
+    let end = moment(betweenEnd).utc().toDate();
+    
+    // Get dates between the given range
     let dates = rruleSet.between(begin, end);
     return dates;
-  }
+}
 
   render() {
     let eventsEachDay = this.getRenderEvents(this.state.events, this.state.singleEvents);
