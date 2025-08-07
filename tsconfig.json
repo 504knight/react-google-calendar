@@ -18,5 +18,8 @@
     "dist",
     "node_modules",
     "test/**/*.test.tsx"
-  ]
+  ],
+  "paths": {
+    "react": [ "./node_modules/@types/react" ]
+  }
 }
