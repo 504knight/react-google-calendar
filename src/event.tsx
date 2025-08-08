@@ -98,10 +98,11 @@ export default class Event extends React.Component<EventProps, EventState> {
                     @media (max-width: 599px) {
                       display: none;
                     }
+                    font-size: 12px;
                   `}>
                     { this.state.startTime.format("h:mma ") }
                   </span>
-                  <span css={{fontWeight: "500"}}>
+                  <span css={{fontWeight: "500", fontSize: "12px"}}>
                     {this.props.name}
                   </span>
                 </div>

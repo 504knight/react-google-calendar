@@ -144,7 +144,7 @@ export default class MultiEvent extends React.Component<MultiEventProps, MultiEv
                   {
                     this.state.allDay ? "" : this.state.startTime.format("h:mma ")
                   }
-                  <span css={{fontWeight: "500"}}>
+                  <span css={{fontWeight: "500", fontSize: "12px"}}>
                     {this.props.name}
                   </span>
                 </div>
